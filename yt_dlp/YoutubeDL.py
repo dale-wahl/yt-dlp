@@ -1421,7 +1421,7 @@ class YoutubeDL:
 
         if self.in_download_archive(info_dict):
             reason = '%s has already been recorded in the archive' % video_title
-            break_opt, break_err = 'break_on_existing', ExistingVideoReached
+            break_opt, break_err = 'break_on_existing', ExistingVideoReached(f'{self._make_archive_id(info_dict)}: has already been recorded in the archive, stopping due to --break-on-existing')
         else:
             reason = check_filter()
             break_opt, break_err = 'break_on_reject', RejectedVideoReached
@@ -1479,7 +1479,7 @@ class YoutubeDL:
             if temp_id is not None and self.in_download_archive({'id': temp_id, 'ie_key': key}):
                 self.to_screen(f'[{key}] {temp_id}: has already been recorded in the archive')
                 if self.params.get('break_on_existing', False):
-                    raise ExistingVideoReached()
+                    raise ExistingVideoReached(f'[{key}] {temp_id}: has already been recorded in the archive, stopping due to --break-on-existing')
                 break
             return self.__extract_info(url, self.get_info_extractor(key), download, extra_info, process)
         else:
