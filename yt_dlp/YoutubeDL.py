@@ -1479,7 +1479,7 @@ class YoutubeDL:
             if temp_id is not None and self.in_download_archive({'id': temp_id, 'ie_key': key}):
                 self.to_screen(f'[{key}] {temp_id}: has already been recorded in the archive')
                 if self.params.get('break_on_existing', False):
-                    raise ExistingVideoReached(f'[{key}] {temp_id}: has already been recorded in the archive, stopping due to --break-on-existing')
+                    raise ExistingVideoReached(f'{self._make_archive_id({'id': temp_id, 'ie_key': key})}: has already been recorded in the archive, stopping due to --break-on-existing')
                 break
             return self.__extract_info(url, self.get_info_extractor(key), download, extra_info, process)
         else:
